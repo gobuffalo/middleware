@@ -2,12 +2,12 @@ package paramlogger
 
 import (
 	"encoding/json"
+	"fmt"
 	"mime/multipart"
 	"net/url"
 	"strings"
 
 	"github.com/gobuffalo/buffalo"
-	"github.com/pkg/errors"
 )
 
 // ParameterExclusionList is the list of parameter names that will be filtered
@@ -72,7 +72,7 @@ func (pl parameterLogger) logForm(c buffalo.Context) error {
 	}
 
 	if err := pl.addFormFieldTo(c, req.Form); err != nil {
-		return errors.WithStack(err)
+		return fmt.Errorf("unable to add form field %v: %w", req.Form, err)
 	}
 
 	return nil
@@ -92,7 +92,7 @@ func (pl parameterLogger) multipartParamLogger(mp *multipart.Form, c buffalo.Con
 	}
 
 	if err := pl.addFormFieldTo(c, uv); err != nil {
-		return errors.WithStack(err)
+		return fmt.Errorf("unable to add form field %v: %w", uv, err)
 	}
 	return nil
 }

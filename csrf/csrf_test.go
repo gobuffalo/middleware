@@ -5,11 +5,12 @@ import (
 	"os"
 	"testing"
 
+	"github.com/gobuffalo/middleware/csrf"
+
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/buffalo/render"
 	"github.com/gobuffalo/envy"
 	"github.com/gobuffalo/httptest"
-	csrf "github.com/gobuffalo/mw-csrf"
 	"github.com/stretchr/testify/require"
 )
 

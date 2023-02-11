@@ -7,10 +7,11 @@ import (
 	"testing"
 	"time"
 
+	"github.com/gobuffalo/middleware/i18n"
+
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/buffalo/render"
 	"github.com/gobuffalo/httptest"
-	i18n "github.com/gobuffalo/mw-i18n/v2"
 	"github.com/stretchr/testify/require"
 )
 
