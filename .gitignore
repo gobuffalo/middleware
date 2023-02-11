@@ -1,0 +1,14 @@
+# Go specific
+*.out
+*.test
+go.work
+
+# OS specific
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE related
+.vscode/
+*.sublime*
+.idea/
