@@ -28,9 +28,15 @@ $ go get github.com/gobuffalo/middleware
 ```
 
 
-## Middlewares
+## contenttype
 
-### csrf
+`contenttype` middleware provides a feature that sets the fallback content type
+(which is used when the client sent nothing) or overrides the client-specified
+content type.
+This middleware will be enabled by default in your app when you generate a new
+API application with `buffalo new --api` command.
+
+## csrf
 
 `csrf` middleware provides
 [CSRF](https://en.wikipedia.org/wiki/Cross-site_request_forgery)
@@ -39,7 +45,7 @@ This middleware will be enabled by default in your app when you generate a new
 application scaffold with `buffalo new` command.
 
 
-### forcessl
+## forcessl
 
 `forcessl` middleware provides a feature that automatically redirects requests
 that is not use HTTPS.
@@ -48,7 +54,7 @@ application scaffold with `buffalo new` command.
 It is configured to enforce the redirection in the `production` mode only. You
 could customize it in `actions/app.go` if you need a different behavior.
 
-### i18n
+## i18n
 
 `i18n` middleware provides internationalization support in your application:
 
@@ -59,7 +65,7 @@ could customize it in `actions/app.go` if you need a different behavior.
 See <https://gobuffalo.io/documentation/guides/localization/> for further
 information about Buffalo translation features and configuration.
 
-### paramlogger
+## paramlogger
 
 `paramlogger` middleware provides the request parameter logging feature.
 This middleware will be enabled by default in your app when you generate a new

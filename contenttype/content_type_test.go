@@ -6,7 +6,7 @@ import (
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/buffalo/render"
 	"github.com/gobuffalo/httptest"
-	contenttype "github.com/gobuffalo/mw-contenttype"
+	"github.com/gobuffalo/middleware/contenttype"
 	"github.com/stretchr/testify/require"
 )
 
