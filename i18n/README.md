@@ -35,4 +35,5 @@ func App() *buffalo.App {
 
 Use `i18n.New` to create a new instance of the translation module, then add the middleware (`T.Middleware()`) to the app to enable its features.
 
-See <https://gobuffalo.io/documentation/localization> for further info about Buffalo translation features and configuration.
+
+See <https://gobuffalo.io/documentation/guides/localization> for further info about Buffalo translation features and configuration.
