@@ -5,7 +5,6 @@ import (
 	"crypto/subtle"
 	"encoding/base64"
 	"errors"
-	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -128,9 +127,6 @@ func generateRandomBytes(n int) ([]byte, error) {
 		return nil, err
 	}
 
-	// hexEncoded := make([]byte, hex.EncodedLen(len(b)))
-	// hex.Encode(hexEncoded, b)
-	log.Println(string(b), len(b))
 	return b, nil
 }
 
@@ -209,7 +205,6 @@ func mask(realToken []byte, r *http.Request) string {
 func unmask(issued []byte) []byte {
 	// Issued tokens are always masked and combined with the pad.
 	if len(issued) != tokenLength*2 {
-		log.Println("CSRF: issued token is not the expected length", len(issued), tokenLength*2)
 		return nil
 	}
 
