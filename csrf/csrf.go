@@ -5,6 +5,7 @@ import (
 	"crypto/subtle"
 	"encoding/base64"
 	"errors"
+	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -127,6 +128,9 @@ func generateRandomBytes(n int) ([]byte, error) {
 		return nil, err
 	}
 
+	// hexEncoded := make([]byte, hex.EncodedLen(len(b)))
+	// hex.Encode(hexEncoded, b)
+	log.Println(string(b), len(b))
 	return b, nil
 }
 
@@ -197,7 +201,7 @@ func mask(realToken []byte, r *http.Request) string {
 	// XOR the OTP with the real token to generate a masked token. Append the
 	// OTP to the front of the masked token to allow unmasking in the subsequent
 	// request.
-	return base64.StdEncoding.EncodeToString(append(otp, xorToken(otp, realToken)...))
+	return base64.RawURLEncoding.EncodeToString(append(otp, xorToken(otp, realToken)...))
 }
 
 // unmask splits the issued token (one-time-pad + masked token) and returns the
@@ -205,6 +209,7 @@ func mask(realToken []byte, r *http.Request) string {
 func unmask(issued []byte) []byte {
 	// Issued tokens are always masked and combined with the pad.
 	if len(issued) != tokenLength*2 {
+		log.Println("CSRF: issued token is not the expected length", len(issued), tokenLength*2)
 		return nil
 	}
 
@@ -240,7 +245,7 @@ func requestCSRFToken(r *http.Request) []byte {
 
 	// Decode the "issued" (pad + masked) token sent in the request. Return a
 	// nil byte slice on a decoding error (this will fail upstream).
-	decoded, err := base64.StdEncoding.DecodeString(issued)
+	decoded, err := base64.RawURLEncoding.DecodeString(issued)
 	if err != nil {
 		return nil
 	}
