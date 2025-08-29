@@ -35,7 +35,8 @@ func app() *buffalo.App {
 	// Setup URL prefix Language extractor
 	t.LanguageExtractors = append(t.LanguageExtractors, i18n.URLPrefixLanguageExtractor)
 
-	app.Use(t.Middleware())
+	mwT := t.Middleware()
+	app.Use(mwT)
 	app.GET("/", func(c buffalo.Context) error {
 		return c.Render(200, r.HTML("index.html"))
 	})
@@ -74,7 +75,7 @@ func app() *buffalo.App {
 	noI18n := func(c buffalo.Context) error {
 		return c.Render(200, r.HTML("localized_view.html"))
 	}
-	app.Middleware.Skip(t.Middleware(), noI18n)
+	app.Middleware.Skip(mwT, noI18n)
 	app.GET("/localized-disabled", noI18n)
 	app.GET("/{lang:fr|en}/index", func(c buffalo.Context) error {
 		return c.Render(200, r.HTML("index.html"))

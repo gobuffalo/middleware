@@ -3,6 +3,7 @@ package csrf_test
 import (
 	"net/http"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/gobuffalo/middleware/csrf"
@@ -45,6 +46,17 @@ func Test_CSRFOnIdempotentAction(t *testing.T) {
 	w := httptest.New(ctCSRFApp())
 	res := w.HTML("/csrf").Get()
 	r.Equal(200, res.Code)
+}
+
+func Test_ContainsNoUnsafeBase64Chars(t *testing.T) {
+	r := require.New(t)
+
+	w := httptest.New(ctCSRFApp())
+	res := w.HTML("/csrf").Get()
+	token := res.Body.String()
+	l := strings.ContainsAny(token, "/+=")
+
+	r.Equal(false, l)
 }
 
 func Test_CSRFOnJSONRequest(t *testing.T) {

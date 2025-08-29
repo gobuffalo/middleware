@@ -197,7 +197,7 @@ func mask(realToken []byte, r *http.Request) string {
 	// XOR the OTP with the real token to generate a masked token. Append the
 	// OTP to the front of the masked token to allow unmasking in the subsequent
 	// request.
-	return base64.StdEncoding.EncodeToString(append(otp, xorToken(otp, realToken)...))
+	return base64.RawURLEncoding.EncodeToString(append(otp, xorToken(otp, realToken)...))
 }
 
 // unmask splits the issued token (one-time-pad + masked token) and returns the
@@ -240,7 +240,7 @@ func requestCSRFToken(r *http.Request) []byte {
 
 	// Decode the "issued" (pad + masked) token sent in the request. Return a
 	// nil byte slice on a decoding error (this will fail upstream).
-	decoded, err := base64.StdEncoding.DecodeString(issued)
+	decoded, err := base64.RawURLEncoding.DecodeString(issued)
 	if err != nil {
 		return nil
 	}
